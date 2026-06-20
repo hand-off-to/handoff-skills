@@ -1,6 +1,7 @@
 key: grounded
 version: 1
 name: Grounded
+inline_summary: Answers only from connected sources and tool results.
 status: active
 definition:
   doc_url: https://github.com/hand-off-to/handoff-skills/blob/master/skills/grounded.yaml

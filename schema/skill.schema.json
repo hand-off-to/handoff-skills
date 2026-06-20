@@ -4,12 +4,13 @@
   "title": "Handoff skill manifest",
   "type": "object",
   "additionalProperties": false,
-  "required": ["key", "version", "name", "status", "definition"],
+  "required": ["key", "version", "name", "inline_summary", "status", "definition"],
   "properties": {
     "key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
     "version": {"type": "integer", "minimum": 1},
     "display_version": {"type": "string"},
     "name": {"type": "string", "minLength": 1},
+    "inline_summary": {"type": "string", "minLength": 1, "maxLength": 200},
     "status": {"enum": ["active", "deactivated"]},
     "definition": {
       "type": "object",

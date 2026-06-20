@@ -14,6 +14,7 @@ VALID_SKILL = {
     "key": "grounded",
     "version": 1,
     "name": "Grounded",
+    "inline_summary": "Answers only from connected sources.",
     "status": "active",
     "definition": {
         "instructions": "Answer only from provided context.",
@@ -33,6 +34,16 @@ def test_missing_instructions_fails():
 
 def test_missing_doc_url_fails():
     bad = {**VALID_SKILL, "definition": {"instructions": "Hi."}}
+    assert validate.validate_data(SCHEMA, bad)
+
+
+def test_missing_inline_summary_fails():
+    bad = {k: v for k, v in VALID_SKILL.items() if k != "inline_summary"}
+    assert validate.validate_data(SCHEMA, bad)
+
+
+def test_overlong_inline_summary_fails():
+    bad = {**VALID_SKILL, "inline_summary": "x" * 201}
     assert validate.validate_data(SCHEMA, bad)
 
 
