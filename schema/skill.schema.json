@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hand-off.to/schemas/skill.schema.json",
+  "title": "Handoff skill manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["key", "version", "name", "status", "definition"],
+  "properties": {
+    "key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "version": {"type": "integer", "minimum": 1},
+    "display_version": {"type": "string"},
+    "name": {"type": "string", "minLength": 1},
+    "status": {"enum": ["active", "deactivated"]},
+    "definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instructions", "doc_url"],
+      "properties": {
+        "instructions": {"type": "string", "minLength": 1},
+        "doc_url": {"type": "string", "pattern": "^https?://"}
+      }
+    }
+  }
+}
