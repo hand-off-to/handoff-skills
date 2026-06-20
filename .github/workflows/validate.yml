@@ -1,0 +1,29 @@
+name: validate
+
+# Gate the default branch: run on every PR targeting master (before merge)
+# and on direct pushes to master.
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# A newer commit on the same ref supersedes an in-flight run.
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements-dev.txt
+      - name: Validate skill manifests (schema + catalog consistency)
+        run: python tools/validate.py
+      - name: Unit tests
+        run: python -m pytest -q
